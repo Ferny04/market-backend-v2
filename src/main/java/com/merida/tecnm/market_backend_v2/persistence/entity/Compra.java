@@ -1,11 +1,10 @@
 package com.merida.tecnm.market_backend_v2.persistence.entity;
-
 import jakarta.persistence.*;
 
-import java.time.LocalDataTime;
+import java.time.LocalDateTime;
 import java.time.LocalDate;
 
-@entity
+@Entity
 @Table (name = "compras")
 public class Compra {
 
@@ -19,11 +18,9 @@ public class Compra {
 
     private LocalDate fecha;
 
-    @column (name = "medio pago")
+    @Column (name = "medio pago")
     private String medioPago;
 
     private String comentario;
     private String estado;
-
-
 }
