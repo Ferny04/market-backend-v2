@@ -1,6 +1,10 @@
 package com.merida.tecnm.market_backend_v2.persistence.entity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "Clientes")
@@ -12,6 +16,9 @@ public class Cliente {
     private String apellidos;
     private String celular;
     private String direccion;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Compra> compras;
 
     @Column(name = "correo_electronico")
     private String correoElectronico;
@@ -33,11 +40,11 @@ public class Cliente {
     }
 
     public String getApellidoa() {
-        return apellidoa;
+        return apellidos;
     }
 
     public void setApellidoa(String apellidoa) {
-        this.apellidoa = apellidoa;
+        this.apellidos = apellidoa;
     }
 
     public String getCelular() {

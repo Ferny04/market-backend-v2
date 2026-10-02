@@ -1,7 +1,6 @@
 package com.merida.tecnm.market_backend_v2.persistence.entity;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,6 +14,14 @@ public class CompraProducto {
     private Integer cantidad;
     private Double total;
     private Boolean estado;
+
+    @ManyToOne
+    @JoinColumn(name = "id_compra", insertable = false, updatable = false)
+    private Compra compra;
+
+    @ManyToOne
+    @JoinColumn(name = "id_producto",  insertable = false, updatable = false)
+    private Producto producto;
 
     public CompraProductoPK getId() {
         return id;
