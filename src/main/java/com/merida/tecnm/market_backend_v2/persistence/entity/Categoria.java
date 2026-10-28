@@ -1,6 +1,6 @@
 package com.merida.tecnm.market_backend_v2.persistence.entity;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -9,7 +9,7 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id_categoria")
+    @Column(name = "id_categoria")
     private Integer idCategoria;
 
     private String descripcion;

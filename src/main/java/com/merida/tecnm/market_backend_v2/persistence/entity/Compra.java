@@ -1,7 +1,6 @@
 package com.merida.tecnm.market_backend_v2.persistence.entity;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class Compra {
     private Cliente cliente;
 
     //relacion con compraProducto
-    @OneToMany(mappedBy = "compra")
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     private List<CompraProducto> productos;
 
     public Integer getIdCompra() {

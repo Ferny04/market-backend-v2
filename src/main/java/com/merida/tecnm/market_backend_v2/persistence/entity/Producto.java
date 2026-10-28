@@ -1,8 +1,6 @@
 package com.merida.tecnm.market_backend_v2.persistence.entity;
 
-
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -16,25 +14,24 @@ public class Producto {
 
     private String nombre;
 
-    @Column (name = "id_categoria")
-    private Integer id_categoria;
+    @Column(name = "id_categoria")
+    private Integer idCategoria;
 
-    @Column (name = "codigo barras")
+    @Column(name = "codigo_barras")
     private String codigoBarras;
 
-    @Column (name= "precio venta")
+    @Column(name = "precio_venta")
     private Double precioVenta;
 
-    @Column (name = "cantidad stock")
+    @Column(name = "cantidad_stock")
     private Integer cantidadStock;
 
     private boolean estado;
 
     @ManyToOne
-    @JoinColumn (name = "id_categoria",  insertable = false, updatable = false)
+    @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
     private Categoria categoria;
 
-    //Ojito
     @OneToMany(mappedBy = "producto")
     private List<CompraProducto> compraProductos;
 
@@ -54,12 +51,12 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public Integer getId_categoria() {
-        return id_categoria;
+    public Integer getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setId_categoria(Integer id_categoria) {
-        this.id_categoria = id_categoria;
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public String getCodigoBarras() {
