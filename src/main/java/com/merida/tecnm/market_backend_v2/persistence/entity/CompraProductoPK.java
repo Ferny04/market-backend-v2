@@ -2,6 +2,7 @@ package com.merida.tecnm.market_backend_v2.persistence.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class CompraProductoPK  implements Serializable {
@@ -26,6 +27,23 @@ public class CompraProductoPK  implements Serializable {
 
     public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof CompraProductoPK)) {
+            return false;
+        }
+        CompraProductoPK id = (CompraProductoPK) object;
+        return Objects.equals(idCompra, id.idCompra) && Objects.equals(idProducto, id.idProducto);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idCompra, idProducto);
     }
 
 

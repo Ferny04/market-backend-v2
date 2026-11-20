@@ -1,7 +1,7 @@
 package com.merida.tecnm.market_backend_v2.persistence.entity;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -10,15 +10,15 @@ public class Compra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id compra")
+    @Column (name = "id_compra")
     private Integer idCompra;
 
-    @Column (name = "id cliente")
+    @Column (name = "id_cliente")
     private String idCliente;
 
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
-    @Column (name = "medio pago")
+    @Column (name = "medio_pago")
     private String medioPago;
 
     private String comentario;
@@ -31,7 +31,7 @@ public class Compra {
     private Cliente cliente;
 
     //relacion con compraProducto
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraProducto> productos;
 
     public Integer getIdCompra() {
@@ -50,11 +50,11 @@ public class Compra {
         this.idCliente = idCliente;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

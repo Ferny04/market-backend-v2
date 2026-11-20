@@ -1,6 +1,7 @@
 package com.merida.tecnm.market_backend_v2.persistence.mapper;
 
 import com.merida.tecnm.market_backend_v2.domain.Purchase;
+import com.merida.tecnm.market_backend_v2.domain.PurchaseRequest;
 import com.merida.tecnm.market_backend_v2.persistence.entity.Compra;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -24,7 +25,18 @@ public interface PurchaseMapper {
     Purchase toPurchase(Compra compra);
     List<Purchase> toPurchases(List<Compra> compras);
 
-    @InheritInverseConfiguration
+    @InheritInverseConfiguration(name = "toPurchase")
     @Mapping(target = "cliente", ignore = true)
     Compra toCompra(Purchase purchase);
+
+    @Mappings({
+            @Mapping(target = "purchaseId", ignore = true),
+            @Mapping(target = "date", ignore = true),
+            @Mapping(target = "state", ignore = true),
+            @Mapping(source = "idCliente", target = "clientId"),
+            @Mapping(source = "medioPago", target = "paymentMethod"),
+            @Mapping(source = "comentario", target = "comment"),
+            @Mapping(source = "productosAdquiridos", target = "items")
+    })
+    Purchase toPurchaseRequest(PurchaseRequest request);
 }

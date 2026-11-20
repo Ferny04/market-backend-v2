@@ -2,26 +2,24 @@ package com.merida.tecnm.market_backend_v2.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name = "Clientes")
+@Table(name = "clientes")
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private String id;
 
     private String nombre;
     private String apellidos;
-    private String celular;
+    private BigDecimal celular;
     private String direccion;
 
     @OneToMany(mappedBy = "cliente")
@@ -30,11 +28,11 @@ public class Cliente {
     @Column(name = "correo_electronico")
     private String correoElectronico;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -54,11 +52,11 @@ public class Cliente {
         this.apellidos = apellidoa;
     }
 
-    public String getCelular() {
+    public BigDecimal getCelular() {
         return celular;
     }
 
-    public void setCelular(String celular) {
+    public void setCelular(BigDecimal celular) {
         this.celular = celular;
     }
 

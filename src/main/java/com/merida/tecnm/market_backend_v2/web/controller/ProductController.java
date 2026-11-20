@@ -1,7 +1,6 @@
 package com.merida.tecnm.market_backend_v2.web.controller;
 
 import com.merida.tecnm.market_backend_v2.domain.Product;
-import com.merida.tecnm.market_backend_v2.domain.repository.ProductRepository;
 import com.merida.tecnm.market_backend_v2.domain.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +20,8 @@ import java.util.List;
 @Tag(name = "Product", description = "Manage your products")
 public class ProductController {
 
+    @Autowired
     private ProductService productService;
-    private ProductRepository productRepository;
 
     @GetMapping("")
     @Operation(summary = "Get all products",
@@ -54,7 +54,7 @@ public class ProductController {
     }
 
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<Product>> getByCategory(@PathVariable int categoryId){
+    public ResponseEntity<List<Product>> getByCategory(@PathVariable("categoryId") int categoryId){
         return productService.getByCategory(categoryId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -93,6 +93,17 @@ public class ProductController {
         return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}") 
+    @Operation(summary = "Update a product by ID", description = "Replace the editable product data")
+    @ApiResponse(responseCode = "200", description = "Product updated successfully")
+    @ApiResponse(responseCode = "404", description = "Product not found")
+    @ApiResponse(responseCode = "409", description = "Product conflicts with existing data")
+    public ResponseEntity<Product> update(@PathVariable("id") int productId, @RequestBody Product product){
+        return productService.update(productId, product)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a product by ID", description = "Deletes a product if it exists")
     @ApiResponse(responseCode = "200", description = "Product deleted successfully")
@@ -100,6 +111,7 @@ public class ProductController {
     @ApiResponse(responseCode = "401", description = "Unauthorized")
     @ApiResponse(responseCode = "403", description = "Forbidden")
     @ApiResponse(responseCode = "404", description = "Product not found")
+    @ApiResponse(responseCode = "409", description = "Product is referenced by a purchase")
     @ApiResponse(responseCode = "500", description = "Internal server error")
     public ResponseEntity<Product> delete(
             @Parameter(description = "ID of the product to be deleted", example = "7",
@@ -107,8 +119,7 @@ public class ProductController {
             @PathVariable("id") int productId){
         if (productService.delete(productId)){
             return ResponseEntity.ok().build();
-        } {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 }
